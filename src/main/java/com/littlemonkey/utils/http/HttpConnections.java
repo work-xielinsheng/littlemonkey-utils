@@ -19,6 +19,7 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
+import org.omg.CORBA.Object;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +29,7 @@ import java.security.cert.X509Certificate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>http连接工具</p>
@@ -47,8 +49,12 @@ public class HttpConnections {
      */
     public static HttpConnection createHttpConnection(HttpHost host) {
         try {
+            HttpConnection httpConnection = httpConnectionThreadLocal.get();
+            if (Objects.nonNull(httpConnection)) {
+                return httpConnection;
+            }
             CookieStore cookieStore = new BasicCookieStore();
-            HttpConnection httpConnection = new HttpConnection(HttpClients.custom()
+            httpConnection = new HttpConnection(HttpClients.custom()
                     .setDefaultCookieStore(cookieStore)
                     .setProxy(host)
                     .setHostnameVerifier(new AllowAllHostnameVerifier())
@@ -114,22 +120,22 @@ public class HttpConnections {
         return execute(httpGet);
     }
 
-    public static String POST(String url, Object reqPayLoad, Map<String, String> headers) throws Exception {
+    public static String POST(String url, Object requestBody, Map<String, String> headers) throws Exception {
         HttpPost httpPost = new HttpPost(url);
         prepareHeaders(httpPost, headers);
-        if (reqPayLoad != null) {
-            String jsonStr = JSON.toJSONString(reqPayLoad);
+        if (requestBody != null) {
+            String jsonStr = JSON.toJSONString(requestBody);
             logger.info("request body: {} ", jsonStr);
             httpPost.setEntity(new StringEntity(jsonStr, ContentType.APPLICATION_JSON));
         }
         return execute(httpPost);
     }
 
-    public String PUT(String url, Object reqPayLoad, Map<String, String> headers) throws Exception {
+    public String PUT(String url, Object requestBody, Map<String, String> headers) throws Exception {
         HttpPut httpPut = new HttpPut(url);
         prepareHeaders(httpPut, headers);
-        if (reqPayLoad != null) {
-            String jsonStr = JSON.toJSONString(reqPayLoad);
+        if (requestBody != null) {
+            String jsonStr = JSON.toJSONString(requestBody);
             logger.info("request body: {} ", jsonStr);
             httpPut.setEntity(new StringEntity(jsonStr, Consts.UTF_8));
         }

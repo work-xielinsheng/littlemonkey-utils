@@ -24,14 +24,32 @@ public class Collections3 extends CollectionUtils {
         return Collections2.filter(unfiltered, predicate);
     }
 
+    /**
+     * <p>判断数组是否是null 或 length = 0</p>
+     *
+     * @param objects
+     * @return
+     */
     public static boolean isEmpty(Object[] objects) {
         return (objects == null || objects.length == 0);
     }
 
+    /**
+     * <p>通过对象的class来判断对象是否是Collection 或Array</p>
+     *
+     * @param targetClass
+     * @return
+     */
     public static boolean isContainer(Class targetClass) {
         return Collection.class.isAssignableFrom(targetClass) || targetClass.isArray();
     }
 
+    /**
+     * <p>通过对象的class来判断对象是否是Map</p>
+     *
+     * @param targetClass
+     * @return
+     */
     public static boolean isMap(Class targetClass) {
         return Map.class.isAssignableFrom(targetClass);
     }
