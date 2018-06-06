@@ -1,6 +1,7 @@
 package com.littlemonkey.utils.http;
 
 import com.alibaba.fastjson.JSON;
+import com.littlemonkey.utils.collect.Collections3;
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
@@ -24,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.URI;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 import java.util.List;
@@ -108,8 +108,10 @@ public class HttpConnections {
     }
 
     private static void prepareHeaders(HttpRequestBase httpRequest, Map<String, String> headers) {
-        for (String header : headers.keySet()) {
-            httpRequest.setHeader(header, headers.get(header));
+        if (Collections3.isNotEmpty(headers)) {
+            for (String header : headers.keySet()) {
+                httpRequest.setHeader(header, headers.get(header));
+            }
         }
     }
 
