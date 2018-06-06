@@ -53,4 +53,9 @@ public class Collections3 extends CollectionUtils {
     public static boolean isMap(Class targetClass) {
         return Map.class.isAssignableFrom(targetClass);
     }
+
+
+    public static boolean isNotEmpty(Map targetMap) {
+        return !isEmpty(targetMap);
+    }
 }
