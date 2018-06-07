@@ -54,21 +54,6 @@ public final class ReflectionUtils2 extends org.springframework.util.ReflectionU
     }
 
     /**
-     * <p>判断是否是包装类或者基本类型以及String</p>
-     *
-     * @param tClass
-     * @return
-     */
-    public static boolean isSimple(Class tClass) {
-        try {
-            return StringUtils.endsWithIgnoreCase(tClass.getTypeName(), String.class.getTypeName())
-                    || ((Class) tClass.getField("TYPE").get(null)).isPrimitive();
-        } catch (Exception e) {
-            return tClass.isPrimitive();
-        }
-    }
-
-    /**
      * <p>获取方法的参数泛型</p>
      *
      * @param targetMethod

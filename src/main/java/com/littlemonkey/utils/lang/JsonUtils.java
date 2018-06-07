@@ -1,7 +1,12 @@
 package com.littlemonkey.utils.lang;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.littlemonkey.utils.collect.Collections3;
+
+import java.util.Collection;
+import java.util.Objects;
 
 public class JsonUtils {
 
@@ -12,7 +17,20 @@ public class JsonUtils {
      * @return
      */
     public static String toJSONString(Object object) {
-
         return JSONObject.toJSONString(object, SerializerFeature.WriteMapNullValue);
     }
+
+    public static JSONObject toJSONObject(Object object) {
+        Objects.requireNonNull(object);
+        if (Collections3.isContainer(object.getClass()) || Objects2.isSimple(object)) {
+            throw new IllegalArgumentException();
+        }
+        return (JSONObject) JSONObject.toJSON(object);
+    }
+
+    public static JSONArray toJSONArray(Collection collection) {
+        Objects.requireNonNull(collection);
+        return (JSONArray) JSONArray.toJSON(collection);
+    }
+
 }

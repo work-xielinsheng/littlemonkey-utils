@@ -5,9 +5,8 @@ import com.google.common.collect.Collections2;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
 
 public class Collections3 extends CollectionUtils {
@@ -42,11 +41,17 @@ public class Collections3 extends CollectionUtils {
     /**
      * <p>通过对象的class来判断对象是否是Collection 或Array</p>
      *
-     * @param targetClass
+     * @param object
      * @return
      */
-    public static boolean isContainer(Class targetClass) {
+    public static boolean isContainer(Object object) {
+        Objects.requireNonNull(object);
+        Class targetClass = object.getClass();
         return Collection.class.isAssignableFrom(targetClass) || targetClass.isArray();
+    }
+
+    public static boolean isNotContainer(Object object) {
+        return !isContainer(object);
     }
 
     /**
