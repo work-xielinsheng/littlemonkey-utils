@@ -34,6 +34,11 @@ public class Collections3 extends CollectionUtils {
         return (objects == null || objects.length == 0);
     }
 
+    public static boolean isNotEmpty(Object[] objects) {
+        return !isEmpty(objects);
+    }
+
+
     /**
      * <p>通过对象的class来判断对象是否是Collection 或Array</p>
      *
@@ -58,4 +63,9 @@ public class Collections3 extends CollectionUtils {
     public static boolean isNotEmpty(Map targetMap) {
         return !isEmpty(targetMap);
     }
+
+    public static boolean isNotEmpty(Collection collection) {
+        return !isEmpty(collection);
+    }
+
 }
