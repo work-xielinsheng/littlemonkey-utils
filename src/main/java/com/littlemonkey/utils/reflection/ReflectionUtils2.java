@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.util.StringUtils;
 import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 import sun.reflect.generics.reflectiveObjects.WildcardTypeImpl;
 
@@ -60,9 +59,7 @@ public final class ReflectionUtils2 extends org.springframework.util.ReflectionU
      * @return
      */
     public static List<GenericType> getGenericType(Method targetMethod) {
-        if (Objects.isNull(targetMethod)) {
-            throw new IllegalArgumentException("targetMethod is null.");
-        }
+        Objects.requireNonNull(targetMethod);
         Type[] genericParameterTypes = targetMethod.getGenericParameterTypes();
         List<GenericType> genericTypeList = Lists.newArrayListWithCapacity(genericParameterTypes.length);
         for (Type genericParameterType : genericParameterTypes) {
