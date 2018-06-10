@@ -21,7 +21,7 @@ public class JsonUtils {
     }
 
     public static JSONObject toJSONObject(Object object) {
-        Objects.requireNonNull(object);
+        Objects2.requireNonNull(object);
         if (Collections3.isContainer(object.getClass()) || Objects2.isSimple(object)) {
             throw new IllegalArgumentException();
         }
@@ -29,7 +29,7 @@ public class JsonUtils {
     }
 
     public static JSONArray toJSONArray(Collection collection) {
-        Objects.requireNonNull(collection);
+        Objects2.requireNonNull(collection);
         return (JSONArray) JSONArray.toJSON(collection);
     }
 

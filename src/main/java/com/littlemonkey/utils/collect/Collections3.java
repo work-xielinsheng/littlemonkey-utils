@@ -2,11 +2,11 @@ package com.littlemonkey.utils.collect;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
+import com.littlemonkey.utils.lang.Objects2;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.Objects;
 
 
 public class Collections3 extends CollectionUtils {
@@ -39,13 +39,13 @@ public class Collections3 extends CollectionUtils {
 
 
     /**
-     * <p>通过对象的class来判断对象是否是Collection 或Array</p>
+     * <p>判断对象是否是Collection 或Array</p>
      *
      * @param object
      * @return
      */
     public static boolean isContainer(Object object) {
-        Objects.requireNonNull(object);
+        Objects2.requireNonNull(object);
         Class targetClass = object.getClass();
         return Collection.class.isAssignableFrom(targetClass) || targetClass.isArray();
     }
@@ -55,12 +55,14 @@ public class Collections3 extends CollectionUtils {
     }
 
     /**
-     * <p>通过对象的class来判断对象是否是Map</p>
+     * <p>判断对象是否是Map</p>
      *
-     * @param targetClass
+     * @param targetObject
      * @return
      */
-    public static boolean isMap(Class targetClass) {
+    public static boolean isMap(Object targetObject) {
+        Objects2.requireNonNull(targetObject);
+        Class targetClass = targetObject.getClass();
         return Map.class.isAssignableFrom(targetClass);
     }
 

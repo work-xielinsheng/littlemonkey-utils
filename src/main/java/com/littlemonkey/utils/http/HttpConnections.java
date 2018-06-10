@@ -2,6 +2,7 @@ package com.littlemonkey.utils.http;
 
 import com.alibaba.fastjson.JSON;
 import com.littlemonkey.utils.collect.Collections3;
+import com.littlemonkey.utils.lang.Objects2;
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
@@ -29,7 +30,6 @@ import java.security.cert.X509Certificate;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * <p>http连接工具</p>
@@ -50,7 +50,7 @@ public class HttpConnections {
     public static HttpConnection createHttpConnection(HttpHost host) {
         try {
             HttpConnection httpConnection = httpConnectionThreadLocal.get();
-            if (Objects.nonNull(httpConnection)) {
+            if (Objects2.nonNull(httpConnection)) {
                 return httpConnection;
             }
             CookieStore cookieStore = new BasicCookieStore();
@@ -95,7 +95,7 @@ public class HttpConnections {
                 if (HttpStatus.SC_OK != statusCode) {
                     logger.error("server response error, code: {},result: {}", statusCode, entityStr);
                 } else {
-                    logger.info("server response success, code: {},result: {}", statusCode, entityStr);
+                    logger.debug("server response success, code: {},result: {}", statusCode, entityStr);
                 }
             }
             return entityStr;

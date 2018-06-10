@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.littlemonkey.utils.base.GenericType;
+import com.littlemonkey.utils.lang.Objects2;
 import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
@@ -59,7 +60,7 @@ public final class ReflectionUtils2 extends org.springframework.util.ReflectionU
      * @return
      */
     public static List<GenericType> getGenericType(Method targetMethod) {
-        Objects.requireNonNull(targetMethod);
+        Objects2.requireNonNull(targetMethod);
         Type[] genericParameterTypes = targetMethod.getGenericParameterTypes();
         List<GenericType> genericTypeList = Lists.newArrayListWithCapacity(genericParameterTypes.length);
         for (Type genericParameterType : genericParameterTypes) {
