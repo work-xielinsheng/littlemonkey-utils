@@ -8,6 +8,9 @@ import com.littlemonkey.utils.collect.Collections3;
 import java.util.Collection;
 import java.util.Objects;
 
+/**
+ * <p>json 工具类</p>
+ */
 public class JsonUtils {
 
     /**
@@ -17,6 +20,7 @@ public class JsonUtils {
      * @return
      */
     public static String toJSONString(Object object) {
+        Objects2.requireNonNull(object);
         return JSONObject.toJSONString(object, SerializerFeature.WriteMapNullValue);
     }
 

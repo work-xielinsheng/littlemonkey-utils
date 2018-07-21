@@ -3,6 +3,7 @@ package com.littlemonkey.utils.http;
 import com.alibaba.fastjson.JSON;
 import com.littlemonkey.utils.collect.Collections3;
 import com.littlemonkey.utils.lang.Objects2;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.http.*;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
@@ -21,7 +22,6 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
-import org.omg.CORBA.Object;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +39,8 @@ public class HttpConnections {
     private static final Logger logger = LoggerFactory.getLogger(HttpConnections.class);
 
     private static ThreadLocal<HttpConnection> httpConnectionThreadLocal = new ThreadLocal<HttpConnection>();
+
+
 
     /**
      * <p>创建http连接</p>
@@ -115,14 +117,14 @@ public class HttpConnections {
         }
     }
 
-    public static String GET(String url, Map<String, String> param, Map<String, String> headers) {
+    public static String get(String url, Map<String, String> param, Map<String, String> headers) {
         HttpGet httpGet = new HttpGet(URLUtils.join(url, param));
         prepareHeaders(httpGet, headers);
         logger.info("request body: {} ", param);
         return execute(httpGet);
     }
 
-    public static String POST(String url, Object requestBody, Map<String, String> headers) throws Exception {
+    public static String post(String url, Object requestBody, Map<String, String> headers) throws Exception {
         HttpPost httpPost = new HttpPost(url);
         prepareHeaders(httpPost, headers);
         if (requestBody != null) {
@@ -133,7 +135,7 @@ public class HttpConnections {
         return execute(httpPost);
     }
 
-    public String PUT(String url, Object requestBody, Map<String, String> headers) throws Exception {
+    public String put(String url, Object requestBody, Map<String, String> headers) throws Exception {
         HttpPut httpPut = new HttpPut(url);
         prepareHeaders(httpPut, headers);
         if (requestBody != null) {
@@ -144,11 +146,15 @@ public class HttpConnections {
         return execute(httpPut);
     }
 
-    public String DELETE(String url, Map<String, String> queryParams, Map<String, String> headers) throws Exception {
-        HttpDelete httpDelete = new HttpDelete(URLUtils.join(url, queryParams));
+    public String delete(String url, Map<String, String> deleteParam, Map<String, String> headers) throws Exception {
+        HttpDelete httpDelete = new HttpDelete(URLUtils.join(url, deleteParam));
         prepareHeaders(httpDelete, headers);
-        logger.info("request body: {} ", queryParams);
+        logger.info("request body: {} ", deleteParam);
         return execute(httpDelete);
+    }
+
+    public String delete(String url, Object deleteObject, Map<String, String> headers) throws Exception {
+        return delete(url, BeanUtils.describe(deleteObject), headers);
     }
 
 
